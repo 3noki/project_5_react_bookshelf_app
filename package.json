@@ -5,6 +5,7 @@
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
+    "react-dev-utils": "^5.0.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.4"
   },
@@ -13,5 +14,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "## How to run the app  Live page is hosted here []()",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3noki/project_5_react_bookshelf_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3noki/project_5_react_bookshelf_app/issues"
+  },
+  "homepage": "https://github.com/3noki/project_5_react_bookshelf_app#readme"
 }

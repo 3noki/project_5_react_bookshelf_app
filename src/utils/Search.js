@@ -4,34 +4,53 @@ import * as BooksAPI from './BooksAPI'
 import Books from './Books'
 
 class Search extends Component {
-// static propTypes = {
-//   books: PropTypes.array.isRequired,
-//   newBooks: PropTypes.array.isRequired
-// }
+static propTypes = {
+  book: PropTypes.object.isRequired,
+  books: PropTypes.array.isRequired,
+  newBooks: PropTypes.array.isRequired
+}
+
 state = {
   query: '',
   newBooks: []
 }
-  searchLibrary = (event) => {
-    this.setState({query: event.target.value})
+  searchLibrary = (query) => {
+
+    this.setState({query: query.trim() })
+    BooksAPI.search(query).then(book =>
+      this.setState({newBooks: book})
+    )
   }
+
 render() {
-  const newBooks = this.state
+  const { query, newBooks } = this.state
+  const { book, books } = this.props
+
   return (
             <div className="search-books">
               <div className="search-books-bar">
                 <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
                 <div className="search-books-input-wrapper">
-                  <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.searchLibrary}/>
+
+                  <input
+                  type="text"
+                  placeholder="Search by title or author"
+                  value={this.state.query}
+                  onChange={(event) => this.searchLibrary(event.target.value)}
+                  />
+
                 </div>
               </div>
               <div className="search-books-results">
-                <ol className="books-grid">
-                  {this.state.newBooks.map((book) => (
-                    <li key={book.id}>
-                    </li>
+              {console.log(newBooks)}
+                  {this.props.newBooks && this.state.newBooks.map((book) => (
+                    <Books
+                    onChangeShelf={this.changeShelf}
+                    books={this.state.books}
+                    book={this.state.book}
+                    key={book.id}
+                    />
                   ))}
-                </ol>
               </div>
             </div>
     )
