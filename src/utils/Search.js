@@ -35,9 +35,8 @@ render() {
             <div className="search-books">
               <div className="search-books-bar">
 
-              <Link className="close-search"  to="/">Close</Link>
-
-
+              <Link to="/" className="close-search">Close</Link>
+              
                 <div className="search-books-input-wrapper">
 
                   <input

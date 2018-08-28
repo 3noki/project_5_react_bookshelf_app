@@ -1,32 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import ChangeShelf from './ChangeShelf.js'
 
 export default class Books extends Component {
 
-static propTypes = {
-  book: PropTypes.object.isRequired,
-  books: PropTypes.array.isRequired
-}
+  static propTypes = {
+    book: PropTypes.object.isRequired,
+    updateShelf: PropTypes.func.isRequired
+  }
 
   render() {
-    const { book, books } = this.props;
+    const { book, updateShelf } = this.props;
 
     return (
-      <ol className="books-grid">
-        {this.props.books && this.props.books.map((book) => (
-          <li key={book.id}>
-          {console.log(book.title)}
-            <div className='book'>
+            <div key={book.id} className='book'>
               <div className='book-top'>
-              <div className='book-cover' style={{ width: 124, height: 188, backgroundImage: `url(${book.imageLinks.thumbnail})`, backgroundRepeat  : 'no-repeat'}}></div>
+              <div className='book-cover' style={{ width: 124, height: 188, backgroundImage: (book.imageLinks) ?
+              (`url(${book.imageLinks.thumbnail})`)
+              :(`url(${'icons/no_image_available.jpg'})`),
+              backgroundRepeat: 'no-repeat'}}></div>
               </div>
+              <ChangeShelf />
                 <div className='book-title'>{this.props.title}</div>
-                <div className='book-authors'>{this.props.authors}</div>
+                (book.authors.length > 0) ? (
+                  {book.authors && book.authors.map((author, index) =>
+                    <div className='book-authors' key={index}>{this.props.authors}</div>
+                  )}
+                ):(<div className='book-authors'>Author'(s)' Unkown</div>)
             </div>
-          </li>
-        ))}
-      </ol>
     )
   }
 }
