@@ -11,19 +11,17 @@ export default class ChangeShelf extends Component {
     onChangeShelf: PropTypes.func.isRequired
 }
 
-updateShelf = (book, shelf) => {
-  this.setState(prevState => {
-    const newBooks = prevState.books.filter((b) => b.id !== book.id)
-    newBooks.push({ book, shelf })
+updateShelf = (book, newShelf) => {
+  this.setState(previousState => {
+    const newBooks = previousState.books.filter((b) => b.id !== book.id)
+    newBooks.push({ book, newShelf })
     return { books: newBooks }
   })
-  BooksAPI.update(book, shelf)
+  BooksAPI.update(book, newShelf)
 }
-
-
-moveBook = (shelfkey) => {
+moveBook = (shelf) => {
   const { books } = this.props
-  return books.filter(book => book.shelf === shelfkey)
+  return books.filter(book => book.shelf === shelf)
 }
 
 render() {
