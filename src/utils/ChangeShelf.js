@@ -8,7 +8,7 @@ export default class ChangeShelf extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     books: PropTypes.array.isRequired,
-    onChangeShelf: PropTypes.func.isRequired
+    updateShelf: PropTypes.func.isRequired
 }
 
 updateShelf = (book, newShelf) => {
