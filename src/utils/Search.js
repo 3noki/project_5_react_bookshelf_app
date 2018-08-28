@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
-import Books from './Books'
+import Books from './Books.js'
+import { Link } from 'react-router-dom'
 
-class Search extends Component {
+export default class Search extends Component {
+
 static propTypes = {
   book: PropTypes.object.isRequired,
   books: PropTypes.array.isRequired,
   newBooks: PropTypes.array.isRequired
 }
-
 state = {
   query: '',
   newBooks: []
 }
-  searchLibrary = (query) => {
 
-    this.setState({query: query.trim() })
-    BooksAPI.search(query).then(book =>
-      this.setState({newBooks: book})
-    )
+searchLibrary = (query) => {
+    if(query.length >= 0) {
+      this.setState({
+        query: query.trim()
+      })}
+    BooksAPI.search(query).then(searchResults => {
+      this.setState({newBooks: searchResults})
+    })
   }
+
 
 render() {
   const { query, newBooks } = this.state
@@ -29,7 +34,10 @@ render() {
   return (
             <div className="search-books">
               <div className="search-books-bar">
-                <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+
+              <Link className="close-search"  to="/">Close</Link>
+
+
                 <div className="search-books-input-wrapper">
 
                   <input
@@ -41,20 +49,22 @@ render() {
 
                 </div>
               </div>
+
               <div className="search-books-results">
-              {console.log(newBooks)}
-                  {this.props.newBooks && this.state.newBooks.map((book) => (
-                    <Books
-                    onChangeShelf={this.changeShelf}
-                    books={this.state.books}
-                    book={this.state.book}
-                    key={book.id}
-                    />
-                  ))}
+                {console.log(newBooks)}
+                <ol className="books-grid">
+                  <li>
+                    {this.props.newBooks && this.state.newBooks.map((book) => (
+                      <Books
+                      books={this.state.books}
+                      book={this.state.book}
+                      key={book.id}
+                      />
+                    ))}
+                  </li>
+                </ol>
               </div>
             </div>
     )
   }
 }
-
-export default Search

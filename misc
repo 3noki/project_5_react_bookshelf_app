@@ -1,0 +1,25 @@
+{this.props.newBooks && this.state.newBooks.map((book) => (
+  <Books
+  onChangeShelf={this.changeShelf}
+  books={this.state.books}
+  book={this.state.book}
+  key={book.id}
+  />
+))}
+
+
+changeshelf = (book) => {
+  this.setState((state) => ({
+    books: state.books.filter((b) => b.id !== book.id)
+  }))
+}
+
+
+{this.state.showSearchPage ? (
+  <Search />
+) : }
+
+
+<div className="open-search">
+  <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+</div>
