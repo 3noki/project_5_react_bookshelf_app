@@ -11,21 +11,14 @@ export default class ChangeShelf extends Component {
     updateShelf: PropTypes.func.isRequired
 }
 
-updateShelf = (book, newShelf) => {
-  this.setState(previousState => {
-    const newBooks = previousState.books.filter((b) => b.id !== book.id)
-    newBooks.push({ book, newShelf })
-    return { books: newBooks }
-  })
-  BooksAPI.update(book, newShelf)
-}
 moveBook = (shelf) => {
   const { books } = this.props
   return books.filter(book => book.shelf === shelf)
 }
 
 render() {
-  const { book, books, updateShelf } = this.props
+  const { book, books } = this.props
+  const updateShelf = this.state
 
     return (
       <div className="book-shelf-changer">

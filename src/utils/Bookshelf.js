@@ -1,32 +1,16 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-import PropTypes from 'prop-types'
 import Books from './Books.js'
 import logo from '../icons/logo.svg'
 import { Link } from 'react-router-dom'
-import ChangeShelf from "./ChangeShelf.js"
-
-const shelves = [
-  { key: 'currentlyReading',
-    name: 'Currently Reading' },
-  { key: 'wantToRead',
-    name: 'Want to Read' },
-  { key: 'read',
-    name: 'Read' }
-]
 
 export default class Bookshelf extends Component {
 
-static propTypes = {
-  book: PropTypes.object.isRequired,
-  books: PropTypes.array.isRequired,
-  updateShelf: PropTypes.func.isRequired
-}
-
 render() {
-  const { book, books, shelfkey } = this.props;
+  const { book, books, newBook, getBookShelf } = this.props
 
   return (
+    <div className="app">
+    {console.log(this.props.books)}
 
       <div className="list-books">
           <div className="react-app">
@@ -41,36 +25,66 @@ render() {
             </div>
 
         <div className="list-books-content">
-          {shelves.map(shelf => (
-            <div key={ shelf.key } className="bookshelf">
-              <h2 className="bookshelf-title">{ shelf.name }</h2>
+          <div className="bookshelf">
+            <h2 className="bookshelf-title">Currently Reading</h2>
+            	{this.props.books && this.props.books.filter(book => book.shelf === 'currentlyReading').map(book =>
+                <div className="bookshelf-books">
+                {getBookShelf(book)}
+                {console.log(this.props.book)}
+                      <ol className="books-grid">
+                        <li key={book.id}>
+                            <Books
+                              book={book}
+                              books={this.props.books}
+                              onUpdateShelf={this.updateShelf}
+                            />
+                        </li>
+                      </ol>
+                  </div>
+              )}
+          </div>
 
-              { updateShelf(shelfkey).length === 0 ?
-                (<div>no books on this shelf</div>)
-                :
-                (<div className="bookshelf-books">
-                    <ol className="books-grid">
-                      <li>
-                        {updateShelf(shelf.key).map(book => (
-                          <Books
-                            book={book}
-                            books={books}
-                            key={book.id}
-                            onupdateShelf={this.UpdateShelf}
-                          />
-                        ))}
-                      </li>
-                    </ol>
-                </div>
-                )
-              }
+          <div className="bookshelf">
+            <h2 className="bookshelf-title">Want to Read</h2>
+            	{this.props.books && books.filter(book => book.shelf === 'wantToRead').map(book =>
+                <div className="bookshelf-books">
+                      <ol className="books-grid">
+                        <li key={book.id}>
+                            <Books
+                              book={book}
+                              books={this.props.books}
+                              onUpdateShelf={this.updateShelf}
+                            />
+                        </li>
+                      </ol>
+                  </div>
+              )}
+          </div>
 
+          <div className="bookshelf">
+            <h2 className="bookshelf-title">Completed Reading</h2>
+            	{this.props.books && books.filter(book => book.shelf === 'read').map(book =>
+                <div className="bookshelf-books">
+                      <ol className="books-grid">
+                        <li key={book.id}>
+                            <Books
+                              book={book}
+                              books={this.props.books}
+                              onUpdateShelf={this.updateShelf}
+                            />
+                        </li>
+                      </ol>
+                  </div>
+              )}
+          </div>
+
+            <div className="open-search">
+              <Link to="/search">Search</Link>
             </div>
-          ))}
-          <Link to="/search" className="open-search">Add a book</Link>
         </div>
       </div>
 
+      </div>
     )
   }
 }

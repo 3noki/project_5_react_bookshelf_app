@@ -1,3 +1,8 @@
+<Redirect from='*' to='/' />
+
+
+
+
 {this.props.newBooks && this.state.newBooks.map((book) => (
   <Books
   onChangeShelf={this.changeShelf}
@@ -23,3 +28,24 @@ changeshelf = (book) => {
 <div className="open-search">
   <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
 </div>
+
+static propTypes = {
+  book: PropTypes.object.isRequired,
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired
+}
+
+updateShelf = (newBook, shelfName) => {
+const { newBooks, newShelf } = this.props
+BooksAPI.update(newBook, shelfName).then(response => {
+  newBook.shelf = newShelf
+  let updatedBooks = this.state.books.filter(book => book.id !== newBook.id)
+  updatedBooks.push(newBooks);
+  this.setState({ books: updatedBooks})
+})
+}
+
+moveBook = (shelfkey) => {
+const { books } = this.props
+return books.filter(book => book.shelf === shelfkey)
+}

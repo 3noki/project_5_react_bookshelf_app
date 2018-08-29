@@ -6,11 +6,6 @@ import { Link } from 'react-router-dom'
 
 export default class Search extends Component {
 
-static propTypes = {
-  book: PropTypes.object.isRequired,
-  books: PropTypes.array.isRequired,
-  newBooks: PropTypes.array.isRequired
-}
 state = {
   query: '',
   newBooks: []
@@ -32,11 +27,12 @@ render() {
   const { book, books } = this.props
 
   return (
+    <div className="app">
             <div className="search-books">
               <div className="search-books-bar">
 
               <Link to="/" className="close-search">Close</Link>
-              
+
                 <div className="search-books-input-wrapper">
 
                   <input
@@ -64,6 +60,7 @@ render() {
                 </ol>
               </div>
             </div>
+    </div>
     )
   }
 }
