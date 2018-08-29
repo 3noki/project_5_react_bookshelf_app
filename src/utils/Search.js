@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import Books from './Books.js'
 import { Link } from 'react-router-dom'
@@ -18,13 +17,14 @@ searchLibrary = (query) => {
       })}
     BooksAPI.search(query).then(searchResults => {
       this.setState({newBooks: searchResults})
+      {console.log(searchResults)}
     })
   }
 
 
 render() {
-  const { query, newBooks } = this.state
-  const { book, books } = this.props
+  const { newBooks } = this.state
+  const { query, books } = this.props
 
   return (
     <div className="app">
@@ -46,16 +46,18 @@ render() {
               </div>
 
               <div className="search-books-results">
-                {console.log(newBooks)}
                 <ol className="books-grid">
                   <li>
-                    {this.props.newBooks && this.state.newBooks.map((book) => (
+                  {newBooks.length >= 1 ? (
+                    (newBooks && newBooks.map(book => (
                       <Books
-                      books={this.state.books}
-                      book={this.state.book}
+                      books={books}
+                      book={book}
                       key={book.id}
                       />
-                    ))}
+                    )))
+                  ) : ( <div>No books in this query, try another search</div>)}
+
                   </li>
                 </ol>
               </div>

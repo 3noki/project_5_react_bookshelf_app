@@ -6,11 +6,10 @@ export default class Books extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     books: PropTypes.array.isRequired,
-    updateShelf: PropTypes.func.isRequired
   }
 
   render() {
-    const { book, onUpdateShelf } = this.props;
+    const { book } = this.props;
     const title = book.title ? book.title : "No title available"
 
     return (
@@ -34,15 +33,8 @@ export default class Books extends Component {
               </div>
 
                 <div className='book-title'>{title}</div>
-                {book.authors.length >= 1 ?
-                  (
-                    book.authors.map((author, index) =>
-                    <div className='book-authors' key={index}>{author}</div>)
-                  ):
-                  (
-                    <div className='book-authors'>Authors Unkown</div>
-                  )
-                }
+                <div className='book-authors'>{book.authors}</div>
+
             </div>
     )
   }
